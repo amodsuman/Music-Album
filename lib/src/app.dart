@@ -62,6 +62,9 @@ class _AppState extends State<App> {
     counter++;
     var uri = Uri.parse("https://api.fresco-meat.com/api/albums/$counter");
     var response = await get(uri);
+    if(response.statusCode != 200) {
+      return;
+    }
     var body = response.body;
     var parsedMap = jsonDecode(body);
 
