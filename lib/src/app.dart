@@ -5,6 +5,7 @@ import 'package:http/http.dart';
 import 'package:music_album/src/models/music_response_model.dart';
 import 'package:music_album/src/widgets/music_list_widget.dart';
 import 'package:connectivity/connectivity.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
 class App extends StatefulWidget {
   @override
@@ -55,14 +56,33 @@ class _AppState extends State<App> {
     if ((result == ConnectivityResult.wifi) ||
         (result == ConnectivityResult.mobile)) {
       fetchMusic();
-    } else {}
+    } else {
+      Fluttertoast.showToast(
+        msg: "No internet connection!",
+        toastLength: Toast.LENGTH_SHORT,
+        gravity: ToastGravity.BOTTOM,
+        timeInSecForIosWeb: 1,
+        backgroundColor: Colors.grey.shade700,
+        textColor: Colors.white,
+        fontSize: 16,
+      );
+    }
   }
 
   void fetchMusic() async {
     counter++;
     var uri = Uri.parse("https://api.fresco-meat.com/api/albums/$counter");
     var response = await get(uri);
-    if(response.statusCode != 200) {
+    if (response.statusCode != 200) {
+      Fluttertoast.showToast(
+        msg: "No more songs available!",
+        toastLength: Toast.LENGTH_SHORT,
+        gravity: ToastGravity.BOTTOM,
+        timeInSecForIosWeb: 1,
+        backgroundColor: Colors.grey.shade700,
+        textColor: Colors.white,
+        fontSize: 16,
+      );
       return;
     }
     var body = response.body;

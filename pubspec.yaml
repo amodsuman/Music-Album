@@ -35,6 +35,9 @@ dependencies:
   #Used to check internet connectivity
   connectivity: ^3.0.3
 
+  #Used to display toast message
+  fluttertoast: ^8.0.6
+
   #Used to make http requests
   http: ^0.13.2
 

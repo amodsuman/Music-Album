@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:music_album/src/models/music_response_model.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:connectivity/connectivity.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
 class MusicListWidget extends StatelessWidget {
   final List<MusicResponseModel> musicList;
@@ -15,13 +16,23 @@ class MusicListWidget extends StatelessWidget {
         launchURL() async {
           if (await canLaunch(musicList[index].url!)) {
             await launch(musicList[index].url!);
-          } else {}
+          }
         }
 
         checkInternet() async {
           var result = await Connectivity().checkConnectivity();
           if (result == ConnectivityResult.wifi) {
             launchURL();
+          } else {
+            Fluttertoast.showToast(
+              msg: "No internet connection!",
+              toastLength: Toast.LENGTH_SHORT,
+              gravity: ToastGravity.BOTTOM,
+              timeInSecForIosWeb: 1,
+              backgroundColor: Colors.grey.shade700,
+              textColor: Colors.white,
+              fontSize: 16,
+            );
           }
         }
 
